@@ -1,0 +1,42 @@
+name: 本番 CI/CD
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    name: デプロイ
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: 古いコンテナを落とします。
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          passphrase: ${{ secrets.PRIVATEKEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            pushd ${{ secrets.DISTPATH }}
+            docker-compose down -v
+            popd
+            rm -rf ${{ secrets.DISTPATH }}
+      - name: リポジトリを配置します。
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          passphrase: ${{ secrets.PRIVATEKEY }}
+          port: ${{ secrets.PORT }}
+          source: .
+          target: ${{ secrets.DISTPATH }}
+      - name: 新しいコンテナを起動します。
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          passphrase: ${{ secrets.PRIVATEKEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            pushd ${{ secrets.DISTPATH }}
+            docker-compose up -d
