@@ -1,2 +1,1 @@
-# phantasostreaming
-PhantasoStreaming: Practice for RTMP media server
+# PhantasoStreaming: YouTube 限定公開でも諸般の理由でやばそうな映像を、内輪で配信するメディアサーバーを作ります

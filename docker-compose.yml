@@ -1,0 +1,9 @@
+version: "3"
+services:
+  rtmp:
+    container_name: rtmp_host
+    image: alqutami/rtmp-hls:latest-alpine
+    ports:
+      - "1935:1935"
+      - "80:8080"
+    restart: always
