@@ -256,3 +256,6 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/certificates,linux,macos,node,sublimetext,vim,visualstudiocode,windows
+
+###########################################################
+.secrets
