@@ -13,7 +13,6 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_ID }}
           key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT }}
           script: |
             pushd ${{ secrets.DISTPATH }}
             ls
