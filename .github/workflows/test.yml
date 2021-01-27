@@ -7,21 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: 秘密鍵をインストールします。
-        uses: shimataro/ssh-key-action@v2
-        with:
-          key: ${{ secrets.SSH_KEY }}
-          name: id_rsa
-          known_hosts: ${{ secrets.SSH_KNOWN_HOSTS }}
-      - name: ユーザーのホーム ディレクトリを取得します。
-        run: echo "::set-output name=VALUE::${HOME}"
-        id: home-dir
-      - name: tests
+      - name: 古いコンテナを落とします。
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_ID }}
-          key_path: ${{ steps.home-dir.outputs.VALUE }}/.ssh/id_rsa
+          key: ${{ secrets.SSH_KEY }}
+          port: ${{ secrets.SSH_PORT }}
           script: |
             pushd ${{ secrets.DISTPATH }}
             ls
